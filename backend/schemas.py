@@ -28,3 +28,14 @@ class UsageRecordOut(BaseModel):
     tokens: int
     cost: Decimal
     used_on: date
+
+
+class TeamSummary(BaseModel):
+    """One row of GET /summary: totals for a single team."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    team: str
+    total_tokens: int
+    total_cost: Decimal
+    record_count: int

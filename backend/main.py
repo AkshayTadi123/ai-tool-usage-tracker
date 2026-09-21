@@ -3,11 +3,12 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from db import get_db
-from routers import records
+from routers import records, summary
 
 app = FastAPI(title="AI Tool Usage Tracker")
 
 app.include_router(records.router)
+app.include_router(summary.router)
 
 
 @app.get("/health")
