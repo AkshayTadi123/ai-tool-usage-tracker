@@ -40,14 +40,14 @@
     </label>
   </div>
 
-  <button type="submit" [disabled]="submitting">
-    {{ submitting ? 'Saving…' : 'Add record' }}
+  <button type="submit" [disabled]="submitting()">
+    {{ submitting() ? 'Saving…' : 'Add record' }}
   </button>
 
   @if (form.invalid && form.touched) {
     <span class="hint">Fill in every field; tokens must be at least 1.</span>
   }
-  @if (error) {
-    <span class="error">{{ error }}</span>
+  @if (error()) {
+    <span class="error">{{ error() }}</span>
   }
 </form>

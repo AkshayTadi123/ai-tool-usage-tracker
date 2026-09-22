@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { UsageService } from './usage.service';
@@ -19,8 +19,8 @@ export class AddRecordForm {
 
   readonly tools = ['Claude Code', 'GitHub Copilot', 'Cursor', 'ChatGPT'];
 
-  submitting = false;
-  error: string | null = null;
+  readonly submitting = signal(false);
+  readonly error = signal<string | null>(null);
 
   // Validators mirror the Pydantic constraints in backend/schemas.py, so the
   // user gets feedback without a round trip. The server still validates.
@@ -39,21 +39,22 @@ export class AddRecordForm {
       return;
     }
 
-    this.submitting = true;
-    this.error = null;
+    this.submitting.set(true);
+    this.error.set(null);
 
     this.usage.createRecord(this.form.getRawValue()).subscribe({
       next: () => {
-        this.submitting = false;
+        this.submitting.set(false);
         this.form.patchValue({ user_name: '' });
         this.created.emit();
       },
       error: (err) => {
-        this.submitting = false;
-        this.error =
+        this.submitting.set(false);
+        this.error.set(
           err.status === 422
             ? 'The API rejected this record (422). Check tokens and cost.'
-            : 'Could not save the record.';
+            : 'Could not save the record.',
+        );
       },
     });
   }

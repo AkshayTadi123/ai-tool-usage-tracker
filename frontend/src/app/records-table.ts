@@ -1,6 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input, OnChanges } from '@angular/core';
-import { inject } from '@angular/core';
+import { Component, Input, OnChanges, inject, signal } from '@angular/core';
 
 import { UsageRecord } from './usage.models';
 import { UsageService } from './usage.service';
@@ -17,9 +16,11 @@ export class RecordsTable implements OnChanges {
 
   private readonly usage = inject(UsageService);
 
-  records: UsageRecord[] = [];
-  loading = false;
-  error: string | null = null;
+  // Signals, not plain fields: this app is zoneless, so Angular only re-renders
+  // when a signal it read during rendering is written to.
+  readonly records = signal<UsageRecord[]>([]);
+  readonly loading = signal(false);
+  readonly error = signal<string | null>(null);
 
   /** Fires on the initial binding and whenever the parent changes `team`. */
   ngOnChanges(): void {
@@ -27,17 +28,17 @@ export class RecordsTable implements OnChanges {
   }
 
   load(): void {
-    this.loading = true;
-    this.error = null;
+    this.loading.set(true);
+    this.error.set(null);
 
     this.usage.getRecords(this.team).subscribe({
       next: (records) => {
-        this.records = records;
-        this.loading = false;
+        this.records.set(records);
+        this.loading.set(false);
       },
       error: () => {
-        this.error = 'Could not reach the API on :8000.';
-        this.loading = false;
+        this.error.set('Could not reach the API on :8000.');
+        this.loading.set(false);
       },
     });
   }

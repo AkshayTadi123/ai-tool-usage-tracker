@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { NewUsageRecord, TeamSummary, UsageRecord } from './usage.models';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'http://127.0.0.1:8000';
 
 /**
  * Every HTTP call lives here. Components inject this and consume the

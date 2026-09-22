@@ -1,12 +1,12 @@
-@if (loading) {
+@if (loading()) {
   <p class="state">Loading records…</p>
-} @else if (error) {
-  <p class="state error">{{ error }}</p>
+} @else if (error()) {
+  <p class="state error">{{ error() }}</p>
   <button type="button" (click)="load()">Retry</button>
-} @else if (records.length === 0) {
+} @else if (records().length === 0) {
   <p class="state">No records{{ team ? ' for ' + team : '' }}.</p>
 } @else {
-  <p class="count">{{ records.length }} record(s)</p>
+  <p class="count">{{ records().length }} record(s)</p>
   <table>
     <thead>
       <tr>
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (record of records; track record.id) {
+      @for (record of records(); track record.id) {
         <tr>
           <td>{{ record.user_name }}</td>
           <td>{{ record.team }}</td>

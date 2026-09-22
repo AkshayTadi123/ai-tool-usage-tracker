@@ -1,17 +1,23 @@
 <main>
   <h1>AI Tool Usage Tracker</h1>
 
-  <app-add-record-form [teams]="teams" (created)="onCreated()" />
+  <app-summary-panel
+    [rows]="summary()"
+    [loading]="summaryLoading()"
+    [error]="summaryError()"
+  />
+
+  <app-add-record-form [teams]="teams()" (created)="onCreated()" />
 
   <label class="filter">
     Filter by team
     <select #teamSelect (change)="onTeamChange(teamSelect.value)">
       <option value="">All teams</option>
-      @for (team of teams; track team) {
+      @for (team of teams(); track team) {
         <option [value]="team">{{ team }}</option>
       }
     </select>
   </label>
 
-  <app-records-table [team]="selectedTeam" />
+  <app-records-table [team]="selectedTeam()" />
 </main>
