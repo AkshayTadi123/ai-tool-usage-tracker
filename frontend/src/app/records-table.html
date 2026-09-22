@@ -1,0 +1,34 @@
+@if (loading) {
+  <p class="state">Loading records…</p>
+} @else if (error) {
+  <p class="state error">{{ error }}</p>
+  <button type="button" (click)="load()">Retry</button>
+} @else if (records.length === 0) {
+  <p class="state">No records{{ team ? ' for ' + team : '' }}.</p>
+} @else {
+  <p class="count">{{ records.length }} record(s)</p>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Team</th>
+        <th>Tool</th>
+        <th class="num">Tokens</th>
+        <th class="num">Cost</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (record of records; track record.id) {
+        <tr>
+          <td>{{ record.user_name }}</td>
+          <td>{{ record.team }}</td>
+          <td>{{ record.tool }}</td>
+          <td class="num">{{ record.tokens | number }}</td>
+          <td class="num">${{ record.cost }}</td>
+          <td>{{ record.used_on }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

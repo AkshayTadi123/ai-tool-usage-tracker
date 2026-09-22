@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row">
+    <label>
+      User
+      <input formControlName="user_name" placeholder="Jane Doe" />
+    </label>
+
+    <label>
+      Team
+      <select formControlName="team">
+        <option value="">Select a team…</option>
+        @for (team of teams; track team) {
+          <option [value]="team">{{ team }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Tool
+      <select formControlName="tool">
+        @for (tool of tools; track tool) {
+          <option [value]="tool">{{ tool }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Tokens
+      <input type="number" formControlName="tokens" min="1" />
+    </label>
+
+    <label>
+      Cost
+      <input formControlName="cost" placeholder="0.10" />
+    </label>
+
+    <label>
+      Date
+      <input type="date" formControlName="used_on" />
+    </label>
+  </div>
+
+  <button type="submit" [disabled]="submitting">
+    {{ submitting ? 'Saving…' : 'Add record' }}
+  </button>
+
+  @if (form.invalid && form.touched) {
+    <span class="hint">Fill in every field; tokens must be at least 1.</span>
+  }
+  @if (error) {
+    <span class="error">{{ error }}</span>
+  }
+</form>
