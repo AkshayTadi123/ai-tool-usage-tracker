@@ -2,7 +2,7 @@
  
 A small internal tool for tracking AI coding-tool usage (tokens and cost) by user and team: browse and filter records, add new ones, see per-team totals.
  
-Built to get hands-on experience with the AMD Analytics team's stack —
+Built over a weekend to get hands-on experience, before my interview, with the AMD Analytics team's stack —
 Angular, FastAPI and MySQL!! 
  
 **Stack:** Angular (standalone components, RxJS) · FastAPI + SQLAlchemy + Pydantic · MySQL 8 · Docker Compose
