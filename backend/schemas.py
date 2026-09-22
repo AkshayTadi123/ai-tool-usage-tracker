@@ -39,3 +39,14 @@ class TeamSummary(BaseModel):
     total_tokens: int
     total_cost: Decimal
     record_count: int
+
+
+class UserTotal(BaseModel):
+    """One row of GET /top-users."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    user_name: str
+    team: str
+    total_tokens: int
+    total_cost: Decimal

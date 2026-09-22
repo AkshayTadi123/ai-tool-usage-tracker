@@ -4,9 +4,13 @@
   <p class="state error">{{ error() }}</p>
   <button type="button" (click)="load()">Retry</button>
 } @else if (records().length === 0) {
-  <p class="state">No records{{ team ? ' for ' + team : '' }}.</p>
+  <p class="state">
+    No records{{ team ? ' for ' + team : '' }}{{ hasPrev() ? ' on this page' : '' }}.
+  </p>
+  @if (hasPrev()) {
+    <button type="button" (click)="prevPage()">Back</button>
+  }
 } @else {
-  <p class="count">{{ records().length }} record(s)</p>
   <table>
     <thead>
       <tr>
@@ -31,4 +35,11 @@
       }
     </tbody>
   </table>
+
+  <div class="pager">
+    <button type="button" (click)="prevPage()" [disabled]="!hasPrev()">Previous</button>
+    <span>Page {{ page() }}</span>
+    <button type="button" (click)="nextPage()" [disabled]="!hasNext()">Next</button>
+    <span class="count">showing {{ records().length }} of {{ pageSize }} per page</span>
+  </div>
 }

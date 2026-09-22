@@ -1,3 +1,11 @@
+section {
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -26,18 +34,7 @@ th {
   color: #b00020;
 }
 
-.count {
-  color: #555;
-  font-size: 0.9rem;
-}
-
-.pager {
-  align-items: center;
-  display: flex;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-}
-
-.pager button {
-  padding: 0.25rem 0.6rem;
+.note {
+  color: #666;
+  font-size: 0.8rem;
 }

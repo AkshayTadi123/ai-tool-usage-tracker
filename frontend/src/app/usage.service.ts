@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NewUsageRecord, TeamSummary, UsageRecord } from './usage.models';
+import { NewUsageRecord, TeamSummary, UsageRecord, UserTotal } from './usage.models';
 
 const API_BASE = 'http://127.0.0.1:8000';
 
@@ -24,6 +24,11 @@ export class UsageService {
 
   getSummary(): Observable<TeamSummary[]> {
     return this.http.get<TeamSummary[]>(`${API_BASE}/summary`);
+  }
+
+  getTopUsers(limit = 5): Observable<UserTotal[]> {
+    const params = new HttpParams().set('limit', limit);
+    return this.http.get<UserTotal[]>(`${API_BASE}/top-users`, { params });
   }
 
   createRecord(record: NewUsageRecord): Observable<UsageRecord> {

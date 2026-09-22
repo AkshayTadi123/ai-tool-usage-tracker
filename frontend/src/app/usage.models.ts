@@ -25,3 +25,10 @@ export interface NewUsageRecord {
   cost: string;
   used_on: string;
 }
+
+export interface UserTotal {
+  user_name: string;
+  team: string;
+  total_tokens: number;
+  total_cost: string;
+}

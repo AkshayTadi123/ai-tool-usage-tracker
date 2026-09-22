@@ -17,5 +17,29 @@ services:
       timeout: 5s
       retries: 10
 
+  api:
+    build: ./backend
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      # Inside the compose network the database is reachable by service name
+      # on its real port; the host's 3307 mapping is irrelevant here.
+      DB_HOST: db
+      DB_PORT: 3306
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
 volumes:
   db_data:

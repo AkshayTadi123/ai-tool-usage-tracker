@@ -3,12 +3,13 @@ import { Component, OnInit, ViewChild, computed, inject, signal } from '@angular
 import { AddRecordForm } from './add-record-form';
 import { RecordsTable } from './records-table';
 import { SummaryPanel } from './summary-panel';
+import { TopUsersPanel } from './top-users-panel';
 import { TeamSummary } from './usage.models';
 import { UsageService } from './usage.service';
 
 @Component({
   selector: 'app-root',
-  imports: [AddRecordForm, RecordsTable, SummaryPanel],
+  imports: [AddRecordForm, RecordsTable, SummaryPanel, TopUsersPanel],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -17,6 +18,7 @@ export class App implements OnInit {
 
   /** Gives us a handle on the child so we can refresh it after a create. */
   @ViewChild(RecordsTable) private table?: RecordsTable;
+  @ViewChild(TopUsersPanel) private topUsers?: TopUsersPanel;
 
   readonly summary = signal<TeamSummary[]>([]);
   readonly summaryLoading = signal(false);
@@ -54,5 +56,6 @@ export class App implements OnInit {
     // A new record changes both the list and the totals.
     this.table?.load();
     this.loadSummary();
+    this.topUsers?.load();
   }
 }

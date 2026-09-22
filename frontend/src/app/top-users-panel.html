@@ -1,0 +1,35 @@
+<section>
+  <h2>Top users by tokens</h2>
+
+  @if (loading()) {
+    <p class="state">Loading top users…</p>
+  } @else if (error()) {
+    <p class="state error">{{ error() }}</p>
+    <button type="button" (click)="load()">Retry</button>
+  } @else if (rows().length === 0) {
+    <p class="state">No data yet.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Team</th>
+          <th class="num">Tokens</th>
+          <th class="num">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.user_name; let i = $index) {
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ row.user_name }}</td>
+            <td>{{ row.team }}</td>
+            <td class="num">{{ row.total_tokens | number }}</td>
+            <td class="num">${{ row.total_cost }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>
